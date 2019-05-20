@@ -351,8 +351,7 @@ you should place your code here."
   ;; org layer setup BEGIN
   ;; Task States Configuration
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-                (sequence "WAITING(w)" "HOLD(h)" "|" "CANCELLED(c)" "PHONE" "MEETING"))))
+        (quote ((sequence "TODO(t)" "WAITING(w)" "NOW(n)" "|" "DONE(d)" "CANCELLED(c)"))))
 
   ;; Date insertion Configuration
   ;; Allow automatically handing of created/expired meta data.
@@ -365,30 +364,12 @@ you should place your code here."
    org-expiry-inactive-timestamps   t
    )
 
-  (defun mrb/insert-created-timestamp()
-    "Insert a CREATED property using org-expiry.el for TODO entries"
-    (org-expiry-insert-created)
-    (org-back-to-heading)
-    (org-end-of-line)
-    (insert " ")
-    )
-
-  ;; Automatically add tags when state changes occur
-  (setq org-todo-state-tags-triggers
-        (quote (("CANCELLED" ("CANCELLED" . t))
-                ("WAITING" ("WAITING" . t))
-                ("HOLD" ("WAITING") ("HOLD" . t))
-                (done ("WAITING") ("HOLD"))
-                ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
-                ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
-                ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
-
   ;; Agenda Configuration
   (setq org-agenda-custom-commands
         '(
-          ("n" todo "NEXT")
+          ("n" todo "NOW")
           ("w" todo "WAITING")
-          ("d" "Agenda + Next Actions" ((agenda) (todo "NEXT")))
+          ("d" "Agenda + TODO Actions" ((agenda) (todo "TODO")))
           )
         )
 
@@ -396,13 +377,9 @@ you should place your code here."
   ;; Source: https://www.suenkler.info/docs/emacs-orgmode/
   (setq org-capture-templates
         '(
-          ;; Create Todo under GTD.org -> Congrammer -> Tasks
-          ;; file+olp specifies to full path to fill the Template
-          ("c" "Congrammer TODO" entry (file+olp "~/Remote/Emacs/org-mode/GTD.org" "Congrammer" "Tasks")
-           "* TODO %? \n:PROPERTIES:\n:CREATED: %U\n:END:")
           ;; Create Todo under GTD.org -> Hakim -> Tasks
           ;; file+olp specifies to full path to fill the Template
-          ("h" "Hakim TODO" entry (file+olp "~/Remote/Emacs/org-mode/GTD.org" "Hakim" "Tasks")
+          ("h" "Hakim TODO" entry (file+olp "~/Remote/Emacs/org-mode/GTD.org" "Hakim")
            "* TODO %? \n:PROPERTIES:\n:CREATED: %U\n:END:")
           ))
 
