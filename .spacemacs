@@ -408,7 +408,7 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-
+ '(evil-want-Y-yank-to-eol nil)
  '(indent-tabs-mode nil)
  '(js-indent-level 2)
  '(magit-refs-sections-hook
@@ -416,6 +416,9 @@ you should place your code here."
     (magit-insert-error-header magit-insert-branch-description magit-insert-local-branches magit-insert-remote-branches)))
  '(org-agenda-files (quote ("~/Remote/Emacs/org-mode")))
  '(org-projectile-file "~/Remote/Emacs/org-mode/projectile.org" t)
+ '(package-selected-packages
+   (quote
+    (yasnippet-snippets yaml-mode ws-butler which-key web-mode use-package toc-org spaceline powerline rvm ruby-test-mode rubocop rspec-mode robe restart-emacs pyvenv popwin persp-mode orgit org-mime org-download live-py-mode link-hint js2-refactor indent-guide hy-mode dash-functional hungry-delete hl-todo highlight-parentheses highlight-indentation helm-projectile helm-mode-manager helm-c-yasnippet helm-ag gnuplot git-messenger git-link fuzzy eyebrowse exec-path-from-shell evil-nerd-commenter evil-mc evil-matchit eshell-prompt-extras dumb-jump diff-hl define-word color-identifiers-mode clj-refactor inflections multiple-cursors cider seq clojure-mode parseclj a bind-key auto-highlight-symbol auto-compile packed adaptive-wrap ace-link auto-complete avy inf-ruby anaconda-mode anzu iedit smartparens evil goto-chg git-gutter company request helm popup helm-core async magit git-commit with-editor transient markdown-mode projectile org-plus-contrib hydra php-mode pythonic js2-mode dash yapfify xterm-color winum web-beautify volatile-highlights vi-tilde-fringe uuidgen undo-tree tern tagedit sql-indent smeargle slim-mode shell-pop sesman scss-mode sass-mode ruby-tools rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters queue pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pcre2el parseedn paredit paradox org-projectile org-present org-pomodoro org-bullets open-junk-file nginx-mode neotree multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lv lorem-ipsum livid-mode linum-relative json-mode js-doc htmlize highlight-numbers helm-themes helm-swoop helm-pydoc helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-gutter-fringe git-gutter-fringe+ gh-md flx-ido fill-column-indicator fancy-battery expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eshell-z esh-help emmet-mode elisp-slime-nav drupal-mode diminish cython-mode company-web company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu chruby bundler auto-yasnippet aggressive-indent ace-window ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(standard-indent 2))
 
