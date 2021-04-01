@@ -44,7 +44,6 @@ values."
      colors
      nginx
      sql
-     php
      ruby
      react
      yaml
