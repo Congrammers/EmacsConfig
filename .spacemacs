@@ -414,6 +414,7 @@ you should place your code here."
    (quote
     (magit-insert-error-header magit-insert-branch-description magit-insert-local-branches magit-insert-remote-branches)))
  '(org-agenda-files (quote ("~/Remote/Emacs/org-mode")))
+ '(org-log-into-drawer t)
  '(org-projectile-file "~/Remote/Emacs/org-mode/projectile.org" t)
  '(package-selected-packages
    (quote
