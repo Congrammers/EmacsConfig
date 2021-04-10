@@ -51,6 +51,8 @@ This function should only modify configuration layer settings."
      yaml
      javascript
      notmuch
+     deft
+     bibtex
 
      auto-completion
      ;; better-defaults
@@ -623,6 +625,13 @@ before packages are loaded."
 
   ;; use .agignore
   (setq-default helm-ag-use-agignore t)
+
+  ;; deft layer setup BEGIN
+  (setq deft-directory "~/Remote/Emacs/org-mode/Notes")
+  (setq org-ref-default-bibliography '("~/Remote/Emacs/org-mode/Papers/references.bib")
+        org-ref-pdf-directory "~/Remote/Emacs/org-mode/Papers"
+        org-ref-bibliography-notes "~/Remote/Emacs/org-mode/Notes/papers.org")
+  ;; deft layer setup END
   )
 
 
