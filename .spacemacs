@@ -50,6 +50,7 @@ This function should only modify configuration layer settings."
      react
      yaml
      javascript
+     notmuch
 
      auto-completion
      ;; better-defaults
@@ -431,7 +432,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server nil
+   dotspacemacs-enable-server t
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -570,7 +571,7 @@ before packages are loaded."
   ;; org layer setup BEGIN
   ;; Task States Configuration
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "WAITING(w)" "NOW(n)" "|" "DONE(d)" "CANCELLED(c)"))))
+        (quote ((sequence "TODO(t)" "WAITING(w)" "NOW(n)" "HALT(h)" "|" "DONE(d)" "CANCELLED(c)"))))
 
   ;; Date insertion Configuration
   ;; Allow automatically handing of created/expired meta data.
@@ -592,14 +593,21 @@ before packages are loaded."
           )
         )
 
+  (require 'org-protocol)
   ;; Org Mode Capture
   ;; Source: https://www.suenkler.info/docs/emacs-orgmode/
   (setq org-capture-templates
         '(
           ;; Create Todo under GTD.org -> Hakim -> Tasks
           ;; file+olp specifies to full path to fill the Template
-          ("h" "Hakim TODO" entry (file+olp "~/Remote/Emacs/org-mode/GTD.org" "Hakim")
+          ("h" "Hakim TODO" entry (file+olp (lambda () (concat (first org-agenda-files) "/GTD.org")) "Hakim")
            "* TODO %? \n:PROPERTIES:\n:CREATED: %U\n:END:")
+          ("t" "Protocol" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Bookmarklet")
+           "* TODO Learn: %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%:initial\n#+END_QUOTE\n\n\n%?")
+          ("L" "Protocol Link" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Bookmarklet")
+           "* TODO Read/Learn: %? [[%:link][%:description]]\n Captured On: %U" :immediate-finish t)
+          ("e" "Email" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Emails")
+           "* TODO [#A] Reply: %a \n SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1h\"))" :immediate-finish t)
           ))
 
   ;; stop asking for org-projectile
@@ -617,8 +625,14 @@ before packages are loaded."
   (setq-default helm-ag-use-agignore t)
   )
 
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -641,10 +655,11 @@ before packages are loaded."
 
  '(package-selected-packages
    (quote
-    (smeargle orgit magit-gitflow magit-popup helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit git-commit with-editor transient ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+    (yasnippet-snippets yaml-mode ws-butler which-key web-mode use-package toc-org spaceline powerline rvm ruby-test-mode rubocop rspec-mode robe restart-emacs pyvenv popwin persp-mode orgit org-mime org-download live-py-mode link-hint js2-refactor indent-guide hy-mode dash-functional hungry-delete hl-todo highlight-parentheses highlight-indentation helm-projectile helm-mode-manager helm-c-yasnippet helm-ag gnuplot git-messenger git-link fuzzy eyebrowse exec-path-from-shell evil-nerd-commenter evil-mc evil-matchit eshell-prompt-extras dumb-jump diff-hl define-word color-identifiers-mode clj-refactor inflections multiple-cursors cider seq clojure-mode parseclj a bind-key auto-highlight-symbol auto-compile packed adaptive-wrap ace-link auto-complete avy inf-ruby anaconda-mode anzu iedit smartparens evil goto-chg git-gutter company request helm popup helm-core async magit git-commit with-editor transient markdown-mode projectile org-plus-contrib hydra php-mode pythonic js2-mode dash yapfify xterm-color winum web-beautify volatile-highlights vi-tilde-fringe uuidgen undo-tree tern tagedit sql-indent smeargle slim-mode shell-pop sesman scss-mode sass-mode ruby-tools rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters queue pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pcre2el parseedn paredit paradox org-projectile org-present org-pomodoro org-bullets open-junk-file nginx-mode neotree multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lv lorem-ipsum livid-mode linum-relative json-mode js-doc htmlize highlight-numbers helm-themes helm-swoop helm-pydoc helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-gutter-fringe git-gutter-fringe+ gh-md flx-ido fill-column-indicator fancy-battery expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eshell-z esh-help emmet-mode elisp-slime-nav drupal-mode diminish cython-mode company-web company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu chruby bundler auto-yasnippet aggressive-indent ace-window ace-jump-helm-line ac-ispell)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+)
