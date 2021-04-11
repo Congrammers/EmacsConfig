@@ -40,25 +40,46 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
 
      ;; custom plugin
-     python
      html
-     clojure
+     ;; https://develop.spacemacs.org/layers/+lang/clojure/README.html
+     (clojure :variables
+              ;; clojure-backend 'cider               ;; use cider and disable lsp
+              ;; clojure-enable-linters 'clj-kondo    ;; clj-kondo included in lsp
+              cider-repl-display-help-banner nil      ;; disable help banner
+              cider-pprint-fn 'fipp                   ;; fast pretty printing
+              clojure-indent-style 'align-arguments
+              clojure-align-forms-automatically t
+              clojure-toplevel-inside-comment-form t  ;; evaluate expressions in comment as top level
+              cider-result-overlay-position 'at-point ;; results shown right after expression
+              cider-overlays-use-font-lock t
+              cider-repl-buffer-size-limit 100        ;; limit lines shown in REPL buffer
+              )
      colors
-     nginx
      sql
      ruby
      react
-     yaml
      javascript
      notmuch
      deft
      bibtex
 
-     auto-completion
+     ;; Add tool tips to show doc string of functions
+     ;; Show snippets in the auto-completion popup
+     ;; Show suggestions by most commonly used
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
      ;; better-defaults
      emacs-lisp
-     git
-     helm
+     ;; SPC g s opens Magit git client full screen (q restores previous layout)
+     ;; show word-granularity differences in current diff hunk
+     (git :variables
+          magit-diff-refine-hunk t)
+     ;; helm-follow-mode sticky - remembers use of C-c C-f
+     ;; - follow mode previews when scrolling through a helm list
+     (helm :variables
+           helm-follow-mode-persistent t)
      ;; lsp
      markdown
      multiple-cursors
@@ -68,9 +89,19 @@ This function should only modify configuration layer settings."
             shell-default-position 'bottom
             shell-enable-smart-eshell t)
      ;; spell-checking
-     ;; syntax-checking
-     version-control
-     treemacs)
+     syntax-checking
+     ;; Highlight changes in buffers
+     ;; SPC g . transient state for navigating changes
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t)
+     ;; Visual file manager - `SPC p t'
+     ;; treemacs-no-png-images t removes file and directory icons
+     (treemacs :variables
+               treemacs-indentation 1
+               treemacs-use-filewatch-mode t
+               treemacs-use-follow-mode t)
+     )
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -417,7 +448,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil and `dotspacemacs-activate-smartparens-mode' is also non-nil,
    ;; `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode nil
+   dotspacemacs-smartparens-strict-mode t
 
    ;; If non-nil smartparens-mode will be enabled in programming modes.
    ;; (default t)
@@ -426,7 +457,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis nil
+   dotspacemacs-smart-closing-parenthesis t
 
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
@@ -662,9 +693,6 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files (quote ("~/Remote/Emacs/org-mode")))
  '(org-log-into-drawer t)
  '(org-projectile-file "~/Remote/Emacs/org-mode/projectile.org" t)
- '(package-selected-packages
-   (quote
-    (yasnippet-snippets yaml-mode ws-butler which-key web-mode use-package toc-org spaceline powerline rvm ruby-test-mode rubocop rspec-mode robe restart-emacs pyvenv popwin persp-mode orgit org-mime org-download live-py-mode link-hint js2-refactor indent-guide hy-mode dash-functional hungry-delete hl-todo highlight-parentheses highlight-indentation helm-projectile helm-mode-manager helm-c-yasnippet helm-ag gnuplot git-messenger git-link fuzzy eyebrowse exec-path-from-shell evil-nerd-commenter evil-mc evil-matchit eshell-prompt-extras dumb-jump diff-hl define-word color-identifiers-mode clj-refactor inflections multiple-cursors cider seq clojure-mode parseclj a bind-key auto-highlight-symbol auto-compile packed adaptive-wrap ace-link auto-complete avy inf-ruby anaconda-mode anzu iedit smartparens evil goto-chg git-gutter company request helm popup helm-core async magit git-commit with-editor transient markdown-mode projectile org-plus-contrib hydra php-mode pythonic js2-mode dash yapfify xterm-color winum web-beautify volatile-highlights vi-tilde-fringe uuidgen undo-tree tern tagedit sql-indent smeargle slim-mode shell-pop sesman scss-mode sass-mode ruby-tools rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters queue pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pcre2el parseedn paredit paradox org-projectile org-present org-pomodoro org-bullets open-junk-file nginx-mode neotree multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lv lorem-ipsum livid-mode linum-relative json-mode js-doc htmlize highlight-numbers helm-themes helm-swoop helm-pydoc helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-gutter-fringe git-gutter-fringe+ gh-md flx-ido fill-column-indicator fancy-battery expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eshell-z esh-help emmet-mode elisp-slime-nav drupal-mode diminish cython-mode company-web company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu chruby bundler auto-yasnippet aggressive-indent ace-window ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(standard-indent 2))
 
