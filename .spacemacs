@@ -80,7 +80,38 @@ This function should only modify configuration layer settings."
      ;; - follow mode previews when scrolling through a helm list
      (helm :variables
            helm-follow-mode-persistent t)
-     ;; lsp
+     ;; Language server protocol with minimal visual impact
+     ;; https://practicalli.github.io/spacemacs/install-spacemacs/clojure-lsp/lsp-variables-reference.html
+     (lsp :variables
+          ;; Formatting and indentation - use Cider instead
+          lsp-enable-on-type-formatting nil
+          ;; Set to nil to use CIDER features instead of LSP UI
+          lsp-enable-indentation nil
+
+          ;; symbol highlighting - `lsp-toggle-symbol-highlight` toggles highlighting
+          ;; subtle highlighting for doom-gruvbox-light theme defined in dotspacemacs/user-config
+          lsp-enable-symbol-highlighting t
+
+          ;; Show lint error indicator in the mode-bar (tested on doom-modeline)
+          lsp-modeline-diagnostics-enable t
+
+          ;; popup documentation boxes
+          ;; lsp-ui-doc-enable nil          ;; disable all doc popups
+          lsp-ui-doc-show-with-cursor nil   ;; doc popup for cursor
+          ;; lsp-ui-doc-show-with-mouse t   ;; doc popup for mouse
+          lsp-ui-doc-delay 2                ;; delay in seconds for popup to display
+
+          ;; code actions and diagnostics text as right-hand side of buffer
+          lsp-ui-sideline-enable nil
+
+          ;; reference count for functions (assume their maybe other lenses in future)
+          lsp-lens-enable t
+
+          ;; Efficient use of space in treemacs-lsp display
+          treemacs-space-between-root-nodes nil
+
+          ;; Optimization for large files
+          lsp-file-watch-threshold 10000)
      markdown
      multiple-cursors
      org
@@ -112,7 +143,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(doom-themes)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -264,7 +295,8 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(doom-dark+
+                         spacemacs-dark
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
