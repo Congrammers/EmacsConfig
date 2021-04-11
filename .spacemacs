@@ -65,7 +65,8 @@ This function should only modify configuration layer settings."
      org
      (shell :variables
             shell-default-height 30
-            shell-default-position 'bottom)
+            shell-default-position 'bottom
+            shell-enable-smart-eshell t)
      ;; spell-checking
      ;; syntax-checking
      version-control
@@ -252,10 +253,10 @@ It should only modify the values of Spacemacs settings."
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 21
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 2.1)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -356,7 +357,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -574,6 +575,7 @@ before packages are loaded."
   ;; Task States Configuration
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "WAITING(w)" "NOW(n)" "HALT(h)" "|" "DONE(d)" "CANCELLED(c)"))))
+  (setq org-clock-in-switch-to-state "NOW")
 
   ;; Date insertion Configuration
   ;; Allow automatically handing of created/expired meta data.
@@ -603,18 +605,22 @@ before packages are loaded."
           ;; Create Todo under GTD.org -> Hakim -> Tasks
           ;; file+olp specifies to full path to fill the Template
           ("h" "Hakim TODO" entry (file+olp (lambda () (concat (first org-agenda-files) "/GTD.org")) "Hakim")
-           "* TODO %? \n:PROPERTIES:\n:CREATED: %U\n:END:")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
           ("t" "Protocol" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Bookmarklet")
            "* TODO Learn: %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%:initial\n#+END_QUOTE\n\n\n%?")
           ("L" "Protocol Link" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Bookmarklet")
            "* TODO Read/Learn: %? [[%:link][%:description]]\n Captured On: %U" :immediate-finish t)
           ("e" "Email" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Emails")
-           "* TODO [#A] Reply: %a \n SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1h\"))" :immediate-finish t)
+           "* TODO [#A] Reply: %a\n SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1h\"))" :immediate-finish t)
           ))
 
   ;; stop asking for org-projectile
   (setq org-confirm-elisp-link-function nil)
 
+  ;; add clocker
+  (setq spaceline-org-clock-p t)
+  (setq spaceline-org-clock-format-function
+        (lambda () (truncate-string-to-width (org-clock-get-clock-string) (- (window-total-width) 120) 0 nil t)))
   ;; org layer setup END
 
   ;; navigatie in shell MAC OS
