@@ -76,10 +76,7 @@ This function should only modify configuration layer settings."
      ;; show word-granularity differences in current diff hunk
      (git :variables
           magit-diff-refine-hunk t)
-     ;; helm-follow-mode sticky - remembers use of C-c C-f
-     ;; - follow mode previews when scrolling through a helm list
-     (helm :variables
-           helm-follow-mode-persistent t)
+     helm
      ;; Language server protocol with minimal visual impact
      ;; https://practicalli.github.io/spacemacs/install-spacemacs/clojure-lsp/lsp-variables-reference.html
      (lsp :variables
