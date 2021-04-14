@@ -53,6 +53,7 @@ This function should only modify configuration layer settings."
               cider-result-overlay-position 'at-point ;; results shown right after expression
               cider-overlays-use-font-lock t
               cider-repl-buffer-size-limit 100        ;; limit lines shown in REPL buffer
+              clojure-enable-clj-refactor t
               )
      colors
      sql
@@ -633,6 +634,7 @@ before packages are loaded."
 
   ;; org layer setup BEGIN
   ;; Task States Configuration
+  (with-eval-after-load 'org
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "WAITING(w)" "NOW(n)" "HALT(h)" "|" "DONE(d)" "CANCELLED(c)"))))
   (setq org-clock-in-switch-to-state "NOW")
@@ -681,6 +683,7 @@ before packages are loaded."
   (setq spaceline-org-clock-p t)
   (setq spaceline-org-clock-format-function
         (lambda () (truncate-string-to-width (org-clock-get-clock-string) (- (window-total-width) 120) 0 nil t)))
+  )
   ;; org layer setup END
 
   ;; navigatie in shell MAC OS
