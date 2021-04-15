@@ -703,6 +703,21 @@ before packages are loaded."
         org-ref-pdf-directory "~/Remote/Emacs/org-mode/Papers"
         org-ref-bibliography-notes "~/Remote/Emacs/org-mode/Notes/papers.org")
   ;; deft layer setup END
+
+  ;; notmuch layer setup BEGIN
+  (add-hook 'notmuch-hello-mode-hook
+            (lambda()
+              (set-process-sentinel
+               (start-process-shell-command "offlineimap"
+                                            "*offlineimap*"
+                                            "offlineimap -o")
+               '(lambda (process event)
+                  (notmuch-refresh-all-buffers)
+                  (let ((w (get-buffer-window "*offlineimap*")))
+                    (when w
+                      (with-selected-window w (recenter (window-end)))))))
+              (popwin:display-buffer "*offlineimap*")))
+  ;; notmuch layer setup END
   )
 
 
