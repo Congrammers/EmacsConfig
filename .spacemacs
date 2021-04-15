@@ -636,7 +636,7 @@ before packages are loaded."
   ;; Task States Configuration
   (with-eval-after-load 'org
     (setq org-todo-keywords
-          (quote ((sequence "TODO(t)" "WAITING(w)" "NOW(n)" "HALT(h)" "|" "DONE(d)" "CANCELLED(c)"))))
+          (quote ((sequence "TODO(t)" "HALT(h)" "WAITING(w)" "NOW(n)" "|" "DONE(d)" "CANCELLED(c)"))))
     (setq org-clock-in-switch-to-state "NOW")
 
     ;; Date insertion Configuration
@@ -652,8 +652,7 @@ before packages are loaded."
 
     ;; Agenda Configuration
     (setq org-agenda-custom-commands
-          '(("n" todo "NOW")
-            ("w" todo "WAITING")
+          '(("w" todo "WAITING")
             ("d" "Agenda + TODO Actions" ((agenda) (todo "TODO")))
             ))
 
