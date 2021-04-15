@@ -681,6 +681,10 @@ before packages are loaded."
     (setq spaceline-org-clock-p t)
     (setq spaceline-org-clock-format-function
           (lambda () (truncate-string-to-width (org-clock-get-clock-string) (- (window-total-width) 120) 0 nil t)))
+
+    ;; setting personal clock report
+    (setq org-agenda-clockreport-parameter-plist
+          (quote (:link t :maxlevel 4 :fileskip0 t :compact t :narrow 80)))
   )
   ;; org layer setup END
 
