@@ -635,54 +635,52 @@ before packages are loaded."
   ;; org layer setup BEGIN
   ;; Task States Configuration
   (with-eval-after-load 'org
-  (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "WAITING(w)" "NOW(n)" "HALT(h)" "|" "DONE(d)" "CANCELLED(c)"))))
-  (setq org-clock-in-switch-to-state "NOW")
+    (setq org-todo-keywords
+          (quote ((sequence "TODO(t)" "WAITING(w)" "NOW(n)" "HALT(h)" "|" "DONE(d)" "CANCELLED(c)"))))
+    (setq org-clock-in-switch-to-state "NOW")
 
-  ;; Date insertion Configuration
-  ;; Allow automatically handing of created/expired meta data.
-  (require 'org-expiry)
-  ;; Configure it a bit to my liking
-  (setq
+    ;; Date insertion Configuration
+    ;; Allow automatically handing of created/expired meta data.
+    (require 'org-expiry)
+    ;; Configure it a bit to my liking
+    (setq
                                         ; Name of property when an item is created
-   org-expiry-created-property-name "CREATED" 
+     org-expiry-created-property-name "CREATED" 
                                         ; Don't show everything in the agenda view
-   org-expiry-inactive-timestamps   t
-   )
+     org-expiry-inactive-timestamps   t
+     )
 
-  ;; Agenda Configuration
-  (setq org-agenda-custom-commands
-        '(
-          ("n" todo "NOW")
-          ("w" todo "WAITING")
-          ("d" "Agenda + TODO Actions" ((agenda) (todo "TODO")))
-          )
-        )
+    ;; Agenda Configuration
+    (setq org-agenda-custom-commands
+          '(("n" todo "NOW")
+            ("w" todo "WAITING")
+            ("d" "Agenda + TODO Actions" ((agenda) (todo "TODO")))
+            ))
 
-  (require 'org-protocol)
-  ;; Org Mode Capture
-  ;; Source: https://www.suenkler.info/docs/emacs-orgmode/
-  (setq org-capture-templates
-        '(
-          ;; Create Todo under GTD.org -> Hakim -> Tasks
-          ;; file+olp specifies to full path to fill the Template
-          ("h" "Hakim TODO" entry (file+olp (lambda () (concat (first org-agenda-files) "/GTD.org")) "Hakim")
-           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
-          ("t" "Protocol" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Bookmarklet")
-           "* TODO Learn: %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%:initial\n#+END_QUOTE\n\n\n%?")
-          ("L" "Protocol Link" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Bookmarklet")
-           "* TODO Read/Learn: %? [[%:link][%:description]]\n Captured On: %U" :immediate-finish t)
-          ("e" "Email" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Emails")
-           "* TODO [#A] Reply: %a\n SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1h\"))" :immediate-finish t)
-          ))
+    (require 'org-protocol)
+    ;; Org Mode Capture
+    ;; Source: https://www.suenkler.info/docs/emacs-orgmode/
+    (setq org-capture-templates
+          '(
+            ;; Create Todo under GTD.org -> Hakim -> Tasks
+            ;; file+olp specifies to full path to fill the Template
+            ("h" "Hakim TODO" entry (file+olp (lambda () (concat (first org-agenda-files) "/GTD.org")) "Hakim")
+             "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
+            ("t" "Protocol" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Bookmarklet")
+             "* TODO Learn: %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%:initial\n#+END_QUOTE\n\n\n%?")
+            ("L" "Protocol Link" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Bookmarklet")
+             "* TODO Read/Learn: %? [[%:link][%:description]]\n Captured On: %U" :immediate-finish t)
+            ("e" "Email" entry (file+headline (lambda () (concat (first org-agenda-files) "/inbox.org")) "Emails")
+             "* TODO [#A] Reply: %a\n SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+1h\"))" :immediate-finish t)
+            ))
 
-  ;; stop asking for org-projectile
-  (setq org-confirm-elisp-link-function nil)
+    ;; stop asking for org-projectile
+    (setq org-confirm-elisp-link-function nil)
 
-  ;; add clocker
-  (setq spaceline-org-clock-p t)
-  (setq spaceline-org-clock-format-function
-        (lambda () (truncate-string-to-width (org-clock-get-clock-string) (- (window-total-width) 120) 0 nil t)))
+    ;; add clocker
+    (setq spaceline-org-clock-p t)
+    (setq spaceline-org-clock-format-function
+          (lambda () (truncate-string-to-width (org-clock-get-clock-string) (- (window-total-width) 120) 0 nil t)))
   )
   ;; org layer setup END
 
@@ -717,6 +715,23 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#4f97d7")
+     ("OKAY" . "#4f97d7")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#86dc2f")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX+" . "#dc752f")
+     ("\\?\\?\\?+" . "#dc752f"))))
  '(indent-tabs-mode nil)
  '(js-indent-level 2)
  '(magit-refs-sections-hook
@@ -725,12 +740,11 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files (quote ("~/Remote/Emacs/org-mode")))
  '(org-log-into-drawer t)
  '(org-projectile-file "~/Remote/Emacs/org-mode/projectile.org" t)
- '(paradox-github-token t)
- '(standard-indent 2))
-
  '(package-selected-packages
    (quote
-    (yasnippet-snippets yaml-mode ws-butler which-key web-mode use-package toc-org spaceline powerline rvm ruby-test-mode rubocop rspec-mode robe restart-emacs pyvenv popwin persp-mode orgit org-mime org-download live-py-mode link-hint js2-refactor indent-guide hy-mode dash-functional hungry-delete hl-todo highlight-parentheses highlight-indentation helm-projectile helm-mode-manager helm-c-yasnippet helm-ag gnuplot git-messenger git-link fuzzy eyebrowse exec-path-from-shell evil-nerd-commenter evil-mc evil-matchit eshell-prompt-extras dumb-jump diff-hl define-word color-identifiers-mode clj-refactor inflections multiple-cursors cider seq clojure-mode parseclj a bind-key auto-highlight-symbol auto-compile packed adaptive-wrap ace-link auto-complete avy inf-ruby anaconda-mode anzu iedit smartparens evil goto-chg git-gutter company request helm popup helm-core async magit git-commit with-editor transient markdown-mode projectile org-plus-contrib hydra php-mode pythonic js2-mode dash yapfify xterm-color winum web-beautify volatile-highlights vi-tilde-fringe uuidgen undo-tree tern tagedit sql-indent smeargle slim-mode shell-pop sesman scss-mode sass-mode ruby-tools rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters queue pytest pyenv-mode py-isort pug-mode pip-requirements phpunit phpcbf php-extras php-auto-yasnippets pcre2el parseedn paredit paradox org-projectile org-present org-pomodoro org-bullets open-junk-file nginx-mode neotree multi-term move-text mmm-mode minitest markdown-toc magit-gitflow macrostep lv lorem-ipsum livid-mode linum-relative json-mode js-doc htmlize highlight-numbers helm-themes helm-swoop helm-pydoc helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-gutter-fringe git-gutter-fringe+ gh-md flx-ido fill-column-indicator fancy-battery expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eshell-z esh-help emmet-mode elisp-slime-nav drupal-mode diminish cython-mode company-web company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu chruby bundler auto-yasnippet aggressive-indent ace-window ace-jump-helm-line ac-ispell)))
+    (clj-refactor inflections csv-mode yaml-mode yasnippet-snippets xterm-color ws-butler writeroom-mode winum which-key web-mode web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org terminal-here tagedit symon symbol-overlay string-inflection string-edit sql-indent spaceline-all-the-icons smeargle slim-mode shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rjsx-mode restart-emacs rbenv rake rainbow-mode rainbow-identifiers rainbow-delimiters pug-mode prettier-js popwin password-generator paradox overseer orgit-forge org-superstar org-rich-yank org-ref org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-brain open-junk-file npm-mode nodejs-repl nameless multi-term multi-line mmm-mode minitest markdown-toc magit-svn magit-section magit-gitflow macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide impatient-mode hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-org helm-notmuch helm-mode-manager helm-make helm-lsp helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-css-scss helm-company helm-cider helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emr emmet-mode elisp-slime-nav editorconfig dumb-jump drag-stuff dotenv-mode doom-themes dired-quick-sort diminish diff-hl devdocs deft define-word company-web company-statistics company-quickhelp column-enforce-mode color-identifiers-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu chruby centered-cursor-mode bundler browse-at-remote auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+ '(paradox-github-token t)
+ '(standard-indent 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
