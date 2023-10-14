@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(yaml
+   '(php
+     yaml
      nginx
      python
      ;; ----------------------------------------------------------------
@@ -133,7 +134,8 @@ This function should only modify configuration layer settings."
                treemacs-use-filewatch-mode t
                treemacs-use-follow-mode t)
 
-     lua
+     (lua :variables
+          lua-backend 'lsp)
      )
 
 
