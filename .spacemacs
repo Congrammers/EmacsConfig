@@ -32,18 +32,13 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(php
-     yaml
-     nginx
-     python
-     ;; ----------------------------------------------------------------
+   '(;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
 
      ;; custom plugin
-     html
      ;; https://develop.spacemacs.org/layers/+lang/clojure/README.html
      (clojure :variables
               ;; clojure-backend 'cider               ;; use cider and disable lsp
@@ -58,11 +53,10 @@ This function should only modify configuration layer settings."
               cider-repl-buffer-size-limit 100        ;; limit lines shown in REPL buffer
               clojure-enable-clj-refactor t
               )
-     colors
-     sql
+     python
      ruby
-     react
-     javascript
+     ruby-on-rails
+
      notmuch
      deft
      bibtex
